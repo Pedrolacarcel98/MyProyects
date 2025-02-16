@@ -1,0 +1,33 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #333; /* Fondo negro */
+    margin: 20px;
+    color: #fff; /* Texto blanco */
+}
+
+a {
+    text-decoration: none;
+    color: #fff; /* Texto blanco */
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #ccc; /* Texto gris claro al pasar el mouse */
+}
+
+.documentos {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #444; /* Fondo gris oscuro */
+    border: 1px solid #666; /* Borde gris oscuro */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.documento {
+    margin-bottom: 20px;
+}
+
+.documento:last-child {
+    margin-bottom: 0;
+}

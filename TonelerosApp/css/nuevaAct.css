@@ -1,0 +1,58 @@
+/* Estilos para el formulario */
+.form {
+    margin-top: 20px;
+}
+
+/* Estilos para las etiquetas */
+label {
+    font-weight: bold;
+    color: #000; /* Color negro */
+}
+/* Estilos para el campo de fecha */
+input[type="datetime-local"] {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #000; /* Borde negro */
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Estilo adicional para el campo de fecha */
+input[type="datetime-local"]::-webkit-inner-spin-button,
+
+
+/* Estilos para los campos de entrada */
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #000; /* Borde negro */
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Estilos para el botón */
+.button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #000; /* Fondo negro */
+    color: #fff; /* Texto blanco */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Estilos para los mensajes de confirmación */
+.message {
+    margin-top: 20px;
+    font-weight: bold;
+    color: green; /* Color verde */
+}
+
+h3{
+    color: green;
+}

@@ -1,0 +1,35 @@
+
+/* Estilo por defecto para tamaños de pantalla normales */
+body {
+    font-size: 16px;
+}
+
+/* Para dispositivos pequeños (menos de 768px) */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px; /* Ajusta el tamaño de fuente para pantallas pequeñas */
+    }
+
+    h1 {
+        font-size: 24px; /* Ajusta los títulos si es necesario */
+    }
+
+    .table {
+        font-size: 12px; /* Ajusta el tamaño de fuente en tablas si lo necesitas */
+    }
+}
+
+/* Para dispositivos muy pequeños (menos de 576px) */
+@media (max-width: 576px) {
+    body {
+        font-size: 12px; /* Aún más pequeño para pantallas muy pequeñas */
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    .table {
+        font-size: 10px;
+    }
+}
