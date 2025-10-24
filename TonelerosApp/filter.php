@@ -2,6 +2,7 @@
 <?php
 
 $month = isset($_GET['month']) ? $_GET['month'] : '';
+$year = isset($_GET['year']) ? $_GET['year'] : '';
 $name = isset($_GET['name']) ? $_GET['name'] : '';
 $city = isset($_GET['city']) ? $_GET['city'] : '';
 $soloCerrados = isset($_GET['soloCerrados']) ? 1 : 0;
@@ -21,6 +22,11 @@ if ($city != '') {
 if ($month != '') {
     $consulta .= " AND MONTH(fecha) = '$month'";
 }
+
+if ($year != '') {
+    $consulta .= " AND YEAR(fecha) = '$year'";
+}
+
 
 
 if ($soloCerrados) {
@@ -55,11 +61,6 @@ if($datos && mysqli_num_rows($datos) == 0){
     <div id="filterForm" class="collapse mt-3">
         <form action="#" method="GET">
             
-            <!-- Nombre -->
-            <div class="form-group">
-                <label for="name">Nombre</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Ingresa tu nombre">
-            </div>
             <!-- Mes -->
             <div class="form-group">
                 <label for="month">Mes</label>
@@ -79,12 +80,33 @@ if($datos && mysqli_num_rows($datos) == 0){
                     <option value="12">Diciembre</option>
                 </select>
             </div>
+            
+            <!-- Año -->
+            <div class="form-group">
+                <label for="year">Año</label>
+                <select class="form-control" id="year" name="year">
+                    <option value="">Selecciona un año</option>
+                    <?php
+                        $currentYear = date('Y');
+                        for ($i = $currentYear - 5; $i <= $currentYear + 2; $i++) {
+                            echo "<option value=\"$i\" " . ($year == $i ? 'selected' : '') . ">$i</option>";
+                        }
+                    ?>
+                </select>
+            </div>
+
+            <!-- Nombre -->
+            <div class="form-group">
+                <label for="name">Nombre</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Nombre del cliente" value="<?php echo htmlspecialchars($name); ?>">
+            </div>
+            
 
 
             <!-- Ciudad -->
             <div class="form-group">
                 <label for="city">Ciudad</label>
-                <input type="text" class="form-control" id="city" name="city" placeholder="Ingresa tu ciudad">
+                <input type="text" class="form-control" id="city" name="city" placeholder="Dirección/Ciudad/Pueblo" value="<?php echo htmlspecialchars($city); ?>">
             </div>
             
             

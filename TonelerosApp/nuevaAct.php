@@ -16,8 +16,9 @@ $message = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-    $sql = "INSERT INTO agenda (tipo, fecha, direccion, pContacto, tlf, presupuesto, senal, equipo, observaciones, archivado, cerrada)
-            VALUES (:tipo, :fecha, :direccion, :pContacto, :tlf, :presupuesto, :senal, :observaciones, :equipo , 0, :cerrada)";
+   $sql = "INSERT INTO agenda (tipo, fecha, direccion, pContacto, tlf, presupuesto, senal, equipo, observaciones, archivado, cerrada)
+VALUES (:tipo, :fecha, :direccion, :pContacto, :tlf, :presupuesto, :senal, :equipo, :observaciones, 0, :cerrada)";
+
 
     $var = $conexion->prepare($sql);
     $var->bindValue(':tipo', $_POST['tipo']);
@@ -65,85 +66,94 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 <?php require 'header.php'; ?>
 
-<div class="container">
-    <h1>NUEVA ACTUACION</h1>
-    <form class="form" action="nuevaAct.php" method="post">
-        <div class="row">
+<div class="container py-4">
+    <h1 class="text-center mb-4">NUEVA ACTUACIÓN</h1>
+
+    <form action="nuevaAct.php" method="post" onsubmit="return confirmar()" class="needs-validation" novalidate>
+
+        <div class="row g-3">
             <div class="col-md-6">
-                 <label>¿Esta cerrada?:</label>
-                <select name="cerrada">
-                    <option value="">--Selecciona si esta cerrada o esta en negociación--</option>
-                    <option value=1 class="text-success fw-bold">Cerrada</option>
-                    <option value=0 class="text-warning fw-bold">En negociación</option>
+                <label class="form-label">¿Está cerrada?</label>
+                <select name="cerrada" class="form-select" required>
+                    <option value="">--Selecciona estado--</option>
+                    <option value="1">Cerrada</option>
+                    <option value="0">En negociación</option>
                 </select>
-                <label>Tipo de evento:</label>
-                <select name="tipo">
-                    <option value="">Selecciona tipo de actuación</option>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Tipo de evento:</label>
+                <select name="tipo" class="form-select" required>
+                    <option value="">Selecciona tipo</option>
                     <option value="Boda">Boda</option>
                     <option value="Fiesta">Fiesta</option>
                     <option value="Puesta de largo">Puesta de largo</option>
                     <option value="Cumpleaños">Cumpleaños</option>
                     <option value="Feria">Feria</option>
                     <option value="FeriaS">Feria de Sevilla</option>
-
                     <option value="Bar/Discoteca">Bar/Discoteca</option>
                 </select>
             </div>
 
             <div class="col-md-6">
-                <label>Fecha del evento:</label>
-                <input type="datetime-local" name="fecha" placeholder="fecha" required>
+                <label class="form-label">Fecha del evento:</label>
+                <input type="datetime-local" name="fecha" class="form-control" required>
             </div>
 
             <div class="col-md-6">
-                <label>Dirección:</label>
-                <input type="text" name="direccion" placeholder="dirección">
+                <label class="form-label">Dirección:</label>
+                <input type="text" name="direccion" class="form-control" placeholder="Dirección">
             </div>
 
             <div class="col-md-6">
-                <label>Cliente/Persona de contacto:</label>
-                <input type="text" name="pContacto" placeholder="Cliente" required>
+                <label class="form-label">Persona de contacto:</label>
+                <input type="text" name="pContacto" class="form-control" placeholder="Cliente" required>
             </div>
 
             <div class="col-md-6">
-                <label>Teléfono:</label>
-                <input type="number" name="tlf" placeholder="tlf" required>
+                <label class="form-label">Teléfono:</label>
+                <input type="number" name="tlf" class="form-control" placeholder="Teléfono" required>
             </div>
 
             <div class="col-md-6">
-                <label>Presupuesto:</label>
-                <input type="number" name="presupuesto" placeholder="presupuesto" required>
+                <label class="form-label">Presupuesto:</label>
+                <input type="number" name="presupuesto" class="form-control" placeholder="€" required>
             </div>
 
             <div class="col-md-6">
-                <label>Señal:</label>
-                <input type="number" name="senal" placeholder="señal" required>
+                <label class="form-label">Señal:</label>
+                <input type="number" name="senal" class="form-control" placeholder="€" required>
             </div>
-            
+
             <div class="col-md-6">
-                <label>Equipo:</label>
-                <select name="equipo">
-                    <option value="">--Selecciona si llevamos equipo o no--</option>
-                    <option value=1>Si</option>
-                    <option value=0>No</option>
+                <label class="form-label">Equipo:</label>
+                <select name="equipo" class="form-select" required>
+                    <option value="">--Cliente/Nuestro--</option>
+                    <option value="1">Nuestro</option>
+                    <option value="0">Cliente</option>
                 </select>
             </div>
-            
-         
 
             <div class="col-md-6">
-                <label>Observaciones:</label>
-                <input type="text" name="observaciones" placeholder="observaciones" required>
+                <label class="form-label">Observaciones:</label>
+                <input type="text" name="observaciones" class="form-control" placeholder="Observaciones" required>
             </div>
         </div>
-        <div class="row ">
-            <input type="submit" class="button" onclick="return confirmar()" value="Añadir Actuación">
+
+        <div class="d-grid gap-2 mt-4">
+            <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fa-solid fa-plus"></i> Añadir Actuación
+            </button>
         </div>
     </form>
-    <?php if(!empty($message)) : ?>
-        <h3><?= $message ?></h3>
+
+    <?php if (!empty($message)) : ?>
+        <div class="alert alert-info mt-4 text-center" role="alert">
+            <?= $message ?>
+        </div>
     <?php endif; ?>
 </div>
+
 
 </body>
 </html>

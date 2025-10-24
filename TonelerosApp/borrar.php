@@ -17,7 +17,7 @@ if (isset($_GET['idAct']) && is_numeric($_GET['idAct'])) {
         $stmt->bindParam(':idAct', $idAct, PDO::PARAM_INT);
         
         if ($stmt->execute()) {
-            header("Location: cartas.php");
+            header("Location: agenda.php");
             exit(); 
         } else {
             echo "Error al eliminar el registro.";

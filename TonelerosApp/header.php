@@ -15,7 +15,9 @@ require 'verifySession.php';
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-black">
             <div class="container">
-                <img src="images/logo.png" alt="Logo" style="height: 100px; width: auto;">
+                <a href="agenda.php">
+                    <img src="images/logo.png" alt="Logo" style="height: 100px; width: auto;">
+                </a>
                 <div class="ml-auto">
                     <a href="logout.php" class="btn btn-danger">Salir</a>
                 </div>
