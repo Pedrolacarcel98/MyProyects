@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  # 1. El servicio de la aplicación (PHP + Apache)
+  app:
+    build: .  # Construye la imagen usando el Dockerfile de este directorio
+    container_name: toneleros-app
+    ports:
+      - "8082:80"  # Accedes a tu app en http://localhost:8080
+    volumes:
+      - ./src:/var/www/html  # Sincroniza tu carpeta 'src' con el servidor web
+    depends_on:
+      - db  # No arranca la app hasta que la BBDD esté lista
+
+  # 2. El servicio de la Base de Datos (MySQL)
+  db:
+    image: mysql:8.0  # Usamos una imagen oficial de MySQL 8
+    container_name: toneleros-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ssiidb123  # Pon una contraseña root segura
+      MYSQL_DATABASE: toneleros      # El nombre de tu BBDD
+      MYSQL_USER: toneleros         # El usuario de tu BBDD
+      MYSQL_PASSWORD: ssiidb123             # La contraseña de tu BBDD
+    volumes:
+      - db_data:/var/lib/mysql  # Persiste los datos de la BBDD
+
+  # 3. El servicio de phpMyAdmin
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: toneleros-pma
+    restart: always
+    ports:
+      - "8081:80"  # Accedes a phpMyAdmin en http://localhost:8081
+    environment:
+      PMA_HOST: db  # Apunta al nombre del servicio de la BBDD (importante)
+    depends_on:
+      - db
+
+# Declaramos el volumen para persistir la BBDD
+volumes:
+  db_data:
