@@ -21,7 +21,7 @@ if (isset($_POST['username']) && isset($_POST['password']) && !empty($_POST['use
     if ($filas > 0) {
         $results = mysqli_fetch_assoc($respuesta);
 
-        if (verifiy_password($password, $results['password'])) {
+        if (password_verify($password, $results['password'])) {
             // Si la contraseña es correcta, se inicia la sesión
             $_SESSION['username'] = $username;
             header("Location: agenda.php"); // Redirigir al usuario a la página de la agenda
