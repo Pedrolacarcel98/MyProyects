@@ -1,0 +1,102 @@
+{
+  "Application": {
+    "Screens": [
+      {
+        "Name": "Pantalla_fondo",
+        "Components": [
+          {
+            "Type": "Image",
+            "Name": "fondo_negro",
+            "Width": 626,
+            "Height": 626,
+            "RelativeFilename": "fondo.png"
+          },
+          {
+            "Type": "ToggleButton",
+            "Name": "boton_led",
+            "X": 185,
+            "Y": 111,
+            "Width": 100,
+            "Height": 60,
+            "Pressed": "__generated\\alternate_theme_images_widgets_togglebutton_large_round_small_on_active.png",
+            "Released": "__generated\\alternate_theme_images_widgets_togglebutton_large_round_small_off_dark.png"
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "encende_apagar_led",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "boton_led"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "funcion_led"
+            }
+          }
+        ]
+      }
+    ],
+    "CustomContainerDefinitions": [],
+    "Name": "Practica_7",
+    "Resolution": {
+      "Width": 480,
+      "Height": 272
+    },
+    "SelectedColorDepth": 16,
+    "StartupScreenName": "Pantalla_fondo",
+    "SelectedStartupLanguage": "GB",
+    "TouchGfxPath": "../Middlewares/ST/touchgfx",
+    "UIPath": ".",
+    "AvailableColorDepths": [
+      16
+    ],
+    "AvailableLCDs": {
+      "16": "LCD16bpp"
+    },
+    "AvailableSections": [
+      "ExtFlashSection",
+      "IntFlashSection"
+    ],
+    "AvailableResolutions": [
+      {
+        "Width": 480,
+        "Height": 272
+      }
+    ],
+    "PhysicalButtons": [],
+    "FrameworkFeatures": {
+      "LCD16bpp": {
+        "Id": "LCD16bpp",
+        "IsEnabled": true
+      }
+    },
+    "GenerateAssetsCommand": "make -f simulator/gcc/Makefile assets -j8",
+    "PostGenerateCommand": "touchgfx update_project --project-file=simulator/msvs/Application.vcxproj",
+    "PostGenerateTargetCommand": "touchgfx update_project",
+    "CompileSimulatorCommand": "make -f simulator/gcc/Makefile -j8",
+    "RunSimulatorCommand": "build\\bin\\simulator.exe",
+    "CompileTargetCommand": "make -f ../gcc/Makefile -j8",
+    "FlashTargetCommand": "make -f ../gcc/Makefile flash -j8",
+    "FlashTargetIntCommandOverride": "make -f ../gcc/Makefile intflash -j8",
+    "LandscapeSkinX": 0,
+    "LandscapeSkinY": 0,
+    "PortraitSkinX": 0,
+    "PortraitSkinY": 0,
+    "DisplayOrientation": "Landscape",
+    "Family": "STM32F7",
+    "SubFamily": "STM32F7x6",
+    "Toolchain": "STM32CubeIDE",
+    "Platform": "m7",
+    "ProjectFile": "../STM32F746G_DISCO.ioc",
+    "OptionalComponentsRoot": "../Middlewares/ST/touchgfx_components",
+    "OptionalComponents": [],
+    "AdditionalFeatures": [
+      "CWRVector",
+      "VectorFonts",
+      "Video"
+    ]
+  },
+  "Version": "4.26.0",
+  "CreatedBy": "4.26.0"
+}
