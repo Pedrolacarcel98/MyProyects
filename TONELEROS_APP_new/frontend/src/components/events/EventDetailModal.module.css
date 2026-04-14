@@ -192,6 +192,18 @@
   color: white;
 }
 
+.editBtn {
+  background: transparent;
+  color: #3b82f6;
+  border: 1px solid #3b82f6;
+  font-size: 0.85rem;
+}
+
+.editBtn:hover {
+  background: #3b82f6;
+  color: white;
+}
+
 .confirmBtn {
   background: #facc15;
   color: #000;

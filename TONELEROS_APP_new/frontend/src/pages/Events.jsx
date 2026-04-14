@@ -6,7 +6,21 @@ import styles from './Events.module.css';
 
 export const Events = () => {
   const [refreshKey, setRefreshKey] = useState(0);
-  const handleCreated = () => setRefreshKey(prev => prev + 1);
+  const [editingEvent, setEditingEvent] = useState(null);
+
+  const handleCreated = () => {
+    setRefreshKey(prev => prev + 1);
+    setEditingEvent(null);
+  };
+
+  const handleEdit = (event) => {
+    setEditingEvent(event);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleCancelEdit = () => {
+    setEditingEvent(null);
+  };
 
   return (
     <div className={styles.page}>
@@ -18,11 +32,18 @@ export const Events = () => {
         </header>
 
         <section className={styles.formSection}>
-          <EventForm onCreated={handleCreated} />
+          <EventForm 
+            onCreated={handleCreated} 
+            initialData={editingEvent}
+            onCancel={handleCancelEdit}
+          />
         </section>
 
         <section className={styles.listSection}>
-          <EventsList key={refreshKey} />
+          <EventsList 
+            key={refreshKey} 
+            onEdit={handleEdit}
+          />
         </section>
       </main>
     </div>

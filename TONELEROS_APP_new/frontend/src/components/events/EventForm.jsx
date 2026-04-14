@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './EventForm.module.css';
 import { eventsService } from '../../services/eventsService';
 
-export const EventForm = ({ onCreated }) => {
+export const EventForm = ({ onCreated, initialData, onCancel }) => {
   const [visible, setVisible] = useState(false);
   const [form, setForm] = useState({
     tipo: '',
@@ -19,9 +19,33 @@ export const EventForm = ({ onCreated }) => {
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState(null);
 
+  const isEditing = !!initialData;
+
+  useEffect(() => {
+    if (initialData) {
+      setForm({
+        ...initialData,
+        // Ensure numbers are strings for input value
+        tlf: initialData.tlf?.toString() || '',
+        presupuesto: initialData.presupuesto?.toString() || '',
+        senal: initialData.senal?.toString() || '',
+        // Handle ISO date for datetime-local (slice to YYYY-MM-DDTHH:MM)
+        fecha: initialData.fecha ? initialData.fecha.slice(0, 16) : '',
+      });
+      setVisible(true);
+    }
+  }, [initialData]);
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setForm((prev) => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
+  };
+
+  const handleToggle = () => {
+    if (visible && isEditing && onCancel) {
+      onCancel();
+    }
+    setVisible(!visible);
   };
 
   const handleSubmit = async (e) => {
@@ -36,12 +60,19 @@ export const EventForm = ({ onCreated }) => {
         senal: parseInt(form.senal || 0, 10),
         fecha: form.fecha,
       };
-      const created = await eventsService.createEvent(payload);
+
+      if (isEditing) {
+        await eventsService.updateEvent(initialData.id, payload);
+      } else {
+        await eventsService.createEvent(payload);
+      }
+
       setForm({ tipo: '', fecha: '', direccion: '', pContacto: '', tlf: '', presupuesto: '', senal: '', observaciones: '', equipo: false, estado: 'NEGOCIACION' });
-      if (onCreated) onCreated(created);
+      if (onCreated) onCreated();
+      if (onCancel) onCancel();
       setVisible(false);
     } catch (err) {
-      setError(err.response?.data?.detail || err.message || 'Error creando evento');
+      setError(err.response?.data?.detail || err.message || 'Error guardando evento');
     } finally {
       setIsSaving(false);
     }
@@ -50,11 +81,11 @@ export const EventForm = ({ onCreated }) => {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h2 className={styles.title}>Nuevo Evento</h2>
+        <h2 className={styles.title}>{isEditing ? 'Editar Evento' : 'Nuevo Evento'}</h2>
         <button 
           type="button" 
           className={`${styles.toggleBtn} ${visible ? styles.active : ''}`} 
-          onClick={() => setVisible(!visible)}
+          onClick={handleToggle}
         >
           {visible ? 'Cancelar' : '+ Añadir Evento'}
         </button>

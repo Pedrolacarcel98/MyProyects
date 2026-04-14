@@ -4,11 +4,15 @@ import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { eventsService } from '../../services/eventsService';
 
-export const EventDetailModal = ({ event, onClose, onUpdate }) => {
+export const EventDetailModal = ({ event, onClose, onUpdate, onEdit }) => {
   if (!event) return null;
 
   const eventDate = new Date(event.fecha);
   const isNegotiation = event.estado === 'NEGOCIACION';
+
+  const handleEdit = () => {
+    onEdit(event);
+  };
 
   const handleConfirm = async () => {
     if (!window.confirm('¿Confirmar este evento? Pasará de Negociación a Confirmado.')) return;
@@ -120,6 +124,7 @@ export const EventDetailModal = ({ event, onClose, onUpdate }) => {
         <footer className={styles.footer}>
           <div className={styles.leftActions}>
              <button className={styles.deleteBtn} onClick={handleDelete}>Borrar Evento</button>
+             <button className={styles.editBtn} onClick={handleEdit}>Editar Datos</button>
           </div>
           <div className={styles.rightActions}>
             {isNegotiation && (

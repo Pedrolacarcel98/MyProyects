@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import EventDetailModal from './EventDetailModal';
 
-export const EventsList = () => {
+export const EventsList = ({ onEdit }) => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -27,6 +27,11 @@ export const EventsList = () => {
   };
 
   useEffect(() => { load(); }, []);
+
+  const handleEditClick = (event) => {
+    setSelectedEvent(null);
+    if (onEdit) onEdit(event);
+  };
 
   if (loading) return (
     <div className={styles.loadingContainer}>
@@ -194,6 +199,7 @@ export const EventsList = () => {
           event={selectedEvent} 
           onClose={() => setSelectedEvent(null)} 
           onUpdate={load}
+          onEdit={handleEditClick}
         />
       )}
     </div>
