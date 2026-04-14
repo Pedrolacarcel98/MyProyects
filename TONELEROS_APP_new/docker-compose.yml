@@ -1,11 +1,8 @@
-version: '3.8'
-
 services:
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: toneleros-backend
     ports:
       - "8000:8000"
     environment:
@@ -16,28 +13,24 @@ services:
       - ./backend:/app
       - backend_data:/data
     healthcheck:
-      test: ["CMD", "python", "-c", "import sys,socket; s=socket.socket(); s.settimeout(3);\ntry:\n s.connect(('127.0.0.1',8000)); s.sendall(b'GET /api/health HTTP/1.0\\r\\nHost:127.0.0.1\\r\\n\\r\\n'); resp=s.recv(64); s.close();\n if b'200' in resp: sys.exit(0)\n else: sys.exit(1)\nexcept Exception:\n sys.exit(1)"]
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/api/health || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
-      start_period: 30s
+      start_period: 10s
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile.dev
-    container_name: toneleros-frontend
     ports:
       - "3000:3000"
     depends_on:
-      backend:
-        condition: service_healthy
+      - backend
     environment:
       - VITE_API_URL=http://localhost:8000/api
     volumes:
-      - ./frontend/src:/app/src
-      - ./frontend/index.html:/app/index.html
-      - ./frontend/vite.config.js:/app/vite.config.js
+      - ./frontend:/app
       - /app/node_modules
 
 volumes:
